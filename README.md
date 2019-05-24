@@ -23,6 +23,12 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 ## More about Data
 [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
 
+## Run
+
+~~~
+./src/neural_model/run_experiment.py
+~~~
+
 
 ## Reference
 
