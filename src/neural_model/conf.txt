@@ -40,6 +40,6 @@ sentence_objective_weight = 1.0
 sentence_objective_persistent = True
 word_objective_weight = 0.0
 sentence_composition = attention
-random_seed = 10000
+random_seed = 879647
 neural_network = BILSTM
 human_needs = reiss
