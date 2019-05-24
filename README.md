@@ -22,7 +22,7 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 
 ## More about Data
 ~~~~
-- Link : https://uwnlp.github.io/storycommonsense/
+- [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
 ~~~~
 
 ## Reference
