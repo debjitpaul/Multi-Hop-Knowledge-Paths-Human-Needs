@@ -1,4 +1,13 @@
 # Ranking-and-Selecting-Multi-Hop-Knowledge-Paths-to-Better-Predict-Human-Needs
+This directory contains the following parts of the 'Ranking and Selecting Multi-Hop Knowledge Paths to Better Predict Human Needs' experiment.
+
+## Requirements 
+~~~~
+- python3+
+- nltk
+- igraph
+- Tensorflow 
+~~~~
 ## Coming Soon 
 
 
