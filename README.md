@@ -7,9 +7,18 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 - nltk
 - igraph
 - Tensorflow 
+- Tensorflow-hub
 ~~~~
-## Coming Soon 
 
+## Install
+~~~~
+- pip install tensorflow
+- pip install tensorflow-hub
+- pip install nltk
+- pip install python-igraph
+- pip install spacy 
+- pip install sklearn
+~~~~
 
 
 ## Reference
