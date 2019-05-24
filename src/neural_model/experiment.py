@@ -16,7 +16,7 @@ try:
 except:
     import configparser
 
-from Human_needs_elmoimport Human_needs
+from Human_needs_elmo import Human_needs
 from evaluator import MLTEvaluator
 
 def read_input_files(file_path, max_sentence_length=-1):
