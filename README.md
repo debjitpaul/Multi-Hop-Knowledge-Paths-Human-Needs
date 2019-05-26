@@ -37,7 +37,7 @@ Please find more details in this [folder](https://github.com/debjitpaul/Multi-Ho
 ~~~ 
 python src/graph_model/make_sub_graph_server.py "inputfile" "graphpath" "outputpath" "--purpose" purpose
 ~~~
-#### Requirement: 
+#### Requirements: 
 Inputfile: Path to the input file as mentioned in this [sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data_human_needs_reiss.txt) 
 
 Graphpath: Path of the conceptnet as graph. 
@@ -50,7 +50,14 @@ Purpose: dev or train or test
 ~~~
 
 ~~~
+#### Requirements:
+Graphpath: Path of the subgraph folder. 
 
+Inputfile: Path to the input file as mentioned in this [sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data_human_needs_reiss.txt) 
+
+Output path: Path to store knowledge paths per context_sentence_ids. 
+
+Purpose: dev or train or test
 
 ### Finally, to run the neural model: 
 ~~~
