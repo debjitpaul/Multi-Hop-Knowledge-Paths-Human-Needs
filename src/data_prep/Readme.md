@@ -14,7 +14,11 @@ In our experiment we read the data in the following way:
 
 > Human need distribution: ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
 
-> story+sentence id \t context \t sentence \t char \t emotion distribution 
-
-> story+sentence id \t context \t sentence \t char \t human need distribution 
 ~~~
+
+## Sample Example: 
+~~~~
+story+sentence id \t context \t sentence \t char \t emotion distribution 
+story+sentence id \t context \t sentence \t char \t human need distribution 
+~~~~
+
