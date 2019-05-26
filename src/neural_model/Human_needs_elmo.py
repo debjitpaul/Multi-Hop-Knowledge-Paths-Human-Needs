@@ -309,7 +309,7 @@ class Human_needs(object):
 
 
 ####################################################################### KNOWLEDGE Bi-LSTM ####################################################################################################
-         ''' 
+         
          processed_tensor_1 = processed_tensor_sentence
          with tf.variable_scope("knowledge"):
            processed_tensor_1 = processed_tensor_sentence
@@ -412,7 +412,7 @@ class Human_needs(object):
            if self.config["hidden_layer_size"] > 0:
                 #processed_tensor_knowledge = tf.layers.dense(processed_tensor_knowledge, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer) 
                 processed_tensor_knowledge_sentence = tf.layers.dense(processed_tensor_knowledge_sentence, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)        
-           '''                   
+                              
           
           
 #####################################################################################################################################################
@@ -446,8 +446,6 @@ class Human_needs(object):
 ###############################################################CALCULATE SCORE################################################################
 #####################################################################################################################################################  
 
-         #w = [0.25651040348937304, 0.22974592826635656, 0.24358465201591684, 0.24940955919459729, 0.22538242898763272, 0.28806287516043283, 0.2205690929219014, 0.27280341517037276, 0.18996327339588182, 0.16593872714384172, 0.2665077055287277, 0.26302085620592825, 0.12664638380565296, 0.12461065689438716, 0.06566609681919668, 0.30233368869116317, 0.2620115359427826, 0.11603244509532373, 0.1484901897008849]
-         #w= [1.1879030662249017, 1.3159479733658412, 1.2411852971401804, 1.2121976786594326, 1.3414252834578908, 1.0495406203343016, 1.370698336227065, 1.1082474480839912, 1.5915375813781771, 1.8219597913939, 1.1344275697070743, 1.1494666063796428, 2.3872271722745255, 2.4262266252224087, 4.618171899359511, 1.0, 1.1538945703413075, 2.6055961196266098, 2.036051602467321]
          #if self.config["human_needs"] == "reiss":
          #    w = [3.929112469627414, 4.352634266669815, 4.105348968927056, 4.009469417408209, 4.436903109491611, 3.4714643441750805, 4.533726764493145, 3.665643259544512, 5.264175448882736, 6.026320782448594, 3.7522367243231805, 3.8019798963053515, 7.896001211803761, 8.024995943144209, 3.3076036095385644, 3.81662584588786, 8.618279130276653, 6.7344516295276895]
          if self.config["human_needs"] == "maslow":
@@ -556,7 +554,6 @@ class Human_needs(object):
                   max_length_know = max(knowledge_lengths[i])
             max_length_context = max(context_lengths)
             
-            #print(max_length_know,max_length_context,max_length_sent)
             max_length = 56
             sentence_lengths=[]
             context_lengths=[]
@@ -580,8 +577,7 @@ class Human_needs(object):
             context_pad = self._make_padding(word_ids_context, max_length_context)
             input_dictionary = {self.word_ids: sentences_pad, self.batch_size: len(sentences), self.max_lengths: max_lengths, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes, self.sentence_tokens: sentence_tokens, self.knowledge_tokens:knowledge_tokens, self.context_tokens:context_tokens, self.word_ids_knowledge: knowledge_pad, self.knowledge_max_lengths: knowledge_max_lengths, self.knowledge_lengths: knowledge_lengths, self.word_ids_context:  context_pad, self.context_lengths: context_lengths, self.learningrate: learningrate, self.is_training: is_training}#self.word_ids_knowledge: word_ids_knowledge,self.knowledge_lengths: knowledge_lengths,
                         
-            #input_dictionary = {self.word_ids: sentences_pad, self.batch_size: len(sentences), self.max_lengths: max_lengths,self.weights_path:weight_per, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes, self.sentence_tokens:sentence_tokens, ,self.word_ids_context:context_pad, self.context_tokens:context_tokens, self.context_lengths: context_lengths, self.learningrate: learningrate, self.is_training: is_training}
-            #self.word_ids_knowledge: knowledge_pad, self.knowledge_max_lengths: knowledge_max_lengths, self.knowledge_tokens:knowledge_tokens, self.knowledge_lengths: knowledge_lengths,
+            
             
         elif self.config["sentence_composition"] == "attention":
             input_dictionary = {self.word_ids: word_ids, self.batch_size: len(sentences), self.max_lengths: max_lengths, self.weights_path:weight_per, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes,  self.word_ids_knowledge: word_ids_knowledge, self.knowledge_lengths: knowledge_lengths, self.knowledge_tokens:knowledge_tokens, self.word_ids_context: word_ids_context, self.context_lengths: context_lengths, self.context_tokens:context_tokens ,self.learningrate: learningrate, self.is_training: is_training}
