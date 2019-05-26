@@ -32,7 +32,7 @@ In our experiment we read the data in the following way:
 
 ## Sample Example: 
 ~~~~
-story+sentence id \t context \t sentence \t char \t emotion distribution 
-story+sentence id \t context \t sentence \t char \t human need distribution 
+story+sentence_id \t context \t sentence \t char \t emotion distribution 
+story+sentence_id \t context \t sentence \t char \t human need distribution 
 ~~~~
 
