@@ -26,8 +26,7 @@ class MLTEvaluator(object):
             for i in range(18):
                 self.sentence_predicted[i] = []
                 self.sentence_correct[i] = []
-        #f1  = codecs.open("/Users/debjit/Downloads/python_script/script/result/result.txt",encoding='utf-8',mode='w')
-        #f1.close()        
+               
         self.sentence_total = []
         self.X_test = []
         self.token_scores_list=[]
@@ -44,14 +43,11 @@ class MLTEvaluator(object):
         sentence_pred_refined=[]
         sentence_cor_refined=[]
         
-        #self.reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']
         if self.config["human_needs"] == "maslow":
             self.reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']
         elif self.config["human_needs"] == "reiss":
             self.reiss=['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
             self.reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'contact', 'savings', 'idealism', 'rest']
-                
-        #self.labels=['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
         id, sentences, lst2, weight_per, context, label_distribution = zip(*batch)
         max_1=0
         X = sentences
