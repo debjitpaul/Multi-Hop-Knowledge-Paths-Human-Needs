@@ -26,7 +26,7 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 ## Run
 ### To construct subgraph per sentence 
 ~~~
-python src/graph_model/
+python src/graph_model/make_sub_graph_server.py 
 ~~~
 ### To run the neural model: 
 ~~~
