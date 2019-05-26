@@ -48,7 +48,7 @@ Purpose: dev or train or test
 
 ### To extract relevant knowledge paths: 
 ~~~
-
+python src/graph_model/make_sub_graph_server.py
 ~~~
 #### Requirements:
 Graphpath: Path of the subgraph folder. 
