@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import time
 import codecs
 
-def read_file(data,purpose,g):
+def read_file(data,purpose,output_path,g):
 
    f = codecs.open(data,encoding='utf-8',mode='r')
    id_knowledge={}
@@ -79,10 +79,10 @@ def make_sub_graph(id,purpose,concepts,g):
             if i!=j:
                 try:
                     s = g.get_all_shortest_paths(i,j,mode='OUT')
-                   # k = g.get_all_shortest_paths(j,i,mode='OUT')
+                    k = g.get_all_shortest_paths(j,i,mode='OUT')
                     s = [list(x) for x in set(tuple(x) for x in s)]
-                   # k = [list(x) for x in set(tuple(x) for x in k)]
-                   # s.extend(k)
+                    k = [list(x) for x in set(tuple(x) for x in k)]
+                    s.extend(k)
                     if len(s)==1:
                         if len(s[0])==1:
                             continue #"No Knowledge for "+concepts[i]+" and "+concepts[j]
@@ -129,7 +129,7 @@ def make_sub_graph(id,purpose,concepts,g):
        unique_nodes=list(set(unique_nodes))
        g_1 = g.subgraph(unique_nodes)   
        
-       g_1.write_pickle('/home/mitarb/paul/Human_needs/script/subgraph/'+purpose+'/'+id) 
+       g_1.write_pickle(output_path+purpose+'/'+id) 
       return knowledge
       
           
@@ -151,13 +151,14 @@ def extract_paths_between_concepts(s,g):
     
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("txtfile", help=".txt file containing the input text", nargs='?')
+    parser.add_argument("inputfile", help=".txt file containing the input text", nargs='?')
     parser.add_argument("graphpath", help=".txt file containing the input text", nargs='?')
+    parser.add_argument("outputpath", help=".txt file containing the input text", nargs='?')
     parser.add_argument("--purpose", help="train or dev or test", nargs='?')
     args = parser.parse_args()
     g = Graph(directed=True)
     g = read(args.graphpath, format="pickle")
-    id_knowledge = read_file(args.txtfile,args.purpose,g)
+    id_knowledge = read_file(args.txtfile,args.purpose,args.outputpath,g)
 
     
 
