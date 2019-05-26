@@ -25,7 +25,7 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 
 ## Data prep : 
 
-Please find more details in the folder: 
+Please find more details in this [folder](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep)
 
 
 ## Run
