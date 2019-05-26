@@ -60,7 +60,7 @@ or
 #### Requirements:
 ~~~~
 Graphpath: Path of the subgraph. 
-Inputfile: Path to the input file as mentioned in this [sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data_reiss_concepts.txt) 
+Inputfile: Path to the input file as mentioned in this Input sample
 Output path: Path to store knowledge paths per context_sentence_ids. 
 Purpose: dev or train or test
 ~~~~
