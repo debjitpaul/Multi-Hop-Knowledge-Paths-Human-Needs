@@ -44,14 +44,12 @@ python conceptnet2graph.py path_to_ConceptNet_csv_file
 python src/graph_model/make_sub_graph_server.py "inputfile" "graphpath" "outputpath" "--purpose" purpose
 ~~~
 #### Requirements: 
+~~~
 Inputfile: Path to the input file as mentioned in this [sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data_reiss_concepts.txt) 
-
 Graphpath: Path of the conceptnet as graph. 
-
 Output path: Path to store the subgraph
-
 Purpose: dev or train or test
-
+~~~
 ### To extract relevant knowledge paths: 
 ~~~
 python src/graph_model/extract_path.py --graph_path --input_path --output_path --input_path
