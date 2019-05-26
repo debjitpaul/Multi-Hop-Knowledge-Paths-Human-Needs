@@ -70,15 +70,7 @@ class MLTEvaluator(object):
             sentence_cor=[0]*len(self.reiss)
             for l in pos:
                  sentence_cor[l]=1
-            
             pos_pred = []
-            lab = {'status': 456, 'approval': 346, 'tranquility': 411, 'competition': 441, 'health': 338, 'family': 706, 'romance': 397, 'food': 534, 'indep': 227, 'power': 179, 'order': 497, 'curiosity': 485, 'serenity': 93, 'honor': 99, 'belonging': 24, 'contact': 754, 'savings': 473, 'idealism': 87, 'rest': 129}
-            
-            if self.config["human_needs"] == "maslow":
-                    w = [0.297790533016037, 0.41592023490047303, 0.3391559619610234, 0.38314521549097746, 0.4247173806866449]
-            else:         
-                    w = [0.25451040348937304, 0.22974592826635454, 0.24358465201591684, 0.24940955919459729, 0.22538242898763272, 0.28806287516043283, 0.2205690929219014, 0.27280341517037276, 0.18996327339588182, 0.16593872714384172, 0.2665077055287277, 0.26302085420592825, 0.12664638380565296, 0.12461065489438716, 0.06546609681919668, 0.30233368869116317, 0.2620115359427826, 0.11603244509532373, 0.1484901897008849]
-            
             if name=='train':
               pos_pred = [j for j, h in enumerate(sentence_scores[i]) if h>=0.5]
               #print(sentence_scores)
