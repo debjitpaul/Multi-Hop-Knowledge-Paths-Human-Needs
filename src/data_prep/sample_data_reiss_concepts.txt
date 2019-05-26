@@ -1,0 +1,2 @@
+a2ddbb50-e45b-4ad3-becf-b2d8475172bf__sent1  	  food  	   I began making fish curry for my boyfriend and I.   	 ['make', 'begin', 'fish', 'curry', 'boyfriend', 'friend'] 
+a2ddbb50-e45b-4ad3-becf-b2d8475172bf__sent2  	  indep  	   I decided not to read a recipe since I've made so many in my life.   	 ['make', 'since', 'many', 'life', 'read', 'curry', 'recipe', 'fish', 'begin', 'boyfriend']
