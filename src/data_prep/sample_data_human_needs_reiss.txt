@@ -1,0 +1,4 @@
+a2ddbb50-e45b-4ad3-becf-b2d8475172bf__sent1 	 No Context 	 I began making fish curry for my boyfriend and I. 	 Boyfriend 	 [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+a2ddbb50-e45b-4ad3-becf-b2d8475172bf__sent2 	 I began making fish curry for my boyfriend and I. 	 I decided not to read a recipe since I've made so many in my life. 	 Boyfriend 	 [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+7148ffc4-0d04-4d9f-9286-ae7ae61a813a__sent4 	 Jervis has been single for a long time.|He wants to have a girlfriend.|One day he meets a nice girl at the grocery store. 	 They begin to date. 	 Jervis 	 [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+7148ffc4-0d04-4d9f-9286-ae7ae61a813a__sent4 	 Jervis has been single for a long time.|He wants to have a girlfriend.|One day he meets a nice girl at the grocery store. 	 They begin to date. 	 Nice girl 	 [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
