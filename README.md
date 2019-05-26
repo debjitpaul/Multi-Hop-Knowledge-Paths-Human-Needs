@@ -20,9 +20,13 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 - pip install sklearn
 ~~~~
 
-## More about Data
+## About Data
 [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
 
+## ConceptNet: 
+~~~
+ConceptNet 5.6.0 
+~~~
 ## Data prep : 
 
 Please find more details in this [folder](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep)
