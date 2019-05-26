@@ -199,7 +199,7 @@ def read_file(data):
                     context.append(con)
                     n=1
                     input_sentence.append(s)
-                    input_char.append(line[2])
+                    input_char.append(c)
                     out.append(distribution)
                     s = line[-5]
                     c = line[2]
@@ -220,7 +220,7 @@ def read_file(data):
             context.append(con)
             n=1
             input_sentence.append(s)
-            input_char.append(line[2])
+            input_char.append(c)
             out.append(distribution)
                                 
     count=0
@@ -233,7 +233,7 @@ def read_file(data):
                  if a==2 or a==3:
                     out[i][n]=1  
               count=count+1
-              print(story_ids[i],'\t',context[i],'\t',input_sentence[i],'\t',input_char[i],'\t',out[i])
+              print(story_ids[i],'\t',context[i].replace('|',' '),'\t',input_sentence[i],'\t',input_char[i],'\t',out[i])
     
     return
 
