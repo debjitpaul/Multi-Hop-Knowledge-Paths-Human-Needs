@@ -26,7 +26,7 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 ## Run
 
 ~~~
-./src/neural_model/run_experiment.py
+./src/neural_model/run_experiment.sh
 ~~~
 
 
