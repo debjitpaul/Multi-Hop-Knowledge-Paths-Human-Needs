@@ -23,11 +23,18 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 ## More about Data
 [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
 
+## Data prep : 
+
+Please find more details in the folder: 
+
+
 ## Run
 ### To construct subgraph per sentence 
+~~~ 
+python src/graph_model/make_sub_graph_server.py "inputfile" "graphpath" "outputpath" "--purpose" purpose
 ~~~
-python src/graph_model/make_sub_graph_server.py 
-~~~
+#### Requirement: 
+Inputfile: 
 ### To run the neural model: 
 ~~~
 ./src/neural_model/run_experiment.sh
