@@ -7,6 +7,10 @@
 ## Data Prep:
 
 ~~~~
+1. It contains narrative stories where each sentence is annotated with a character and a set of human need categories
+from two inventories: Maslow’s (with five coarsegrained) and Reiss’s (with 19 fine-grained) categories (Reiss’s labels are considered as subcategories of Maslow’s). 
+2. Since no training data is available, similar to prior work we use a portion of the devset as training data, by performing a random split, using 80% of the data to train the classifier, and 20% to tune parameters. 
+
 > Emotion: 
 We considered the instances if affected==yes -selected by Mturk workers and we take the "majority label" for Plutchik to be categories
 
