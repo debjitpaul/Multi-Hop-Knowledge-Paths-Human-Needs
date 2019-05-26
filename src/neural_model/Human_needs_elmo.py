@@ -16,6 +16,11 @@ import math
 from numpy import array
 import tensorflow_hub as hub
 import codecs
+import nltk
+from nltk.tokenize import TweetTokenizer
+from nltk.stem import WordNetLemmatizer 
+lemmatizer = WordNetLemmatizer() 
+tknzr = TweetTokenizer()
 try:
     import cPickle as pickle
 except:
@@ -617,7 +622,8 @@ class Human_needs(object):
         max_1=0
         if l ==0:
           for i in range(len(X)):
-            x = X[i].split(' ')
+            #x = X[i].split(' ')
+            x = tknzr.tokenize(X[i])
             x = [k for k in x if k]
             sentence_lengths.append(len(x))  
             
@@ -630,7 +636,8 @@ class Human_needs(object):
            
            for i in range(len(X)):
               for j in range(len(X[i])):
-                  x = X[i][j].split(' ')
+                  #x = X[i][j].split(' ')
+                  x = tknzr.tokenize(X[i][j])
                   x = [k for k in x if k]        
                   all_lengths[j]=len(x)
               sentence_lengths.append(all_lengths)
@@ -642,7 +649,8 @@ class Human_needs(object):
           word_ids = numpy.zeros((len(X),max_sentence_length), dtype=numpy.int32)
           sentence_list = [[' '] * max_sentence_length for i in range(len(X))]
           for i in range(len(X)):
-            x = X[i].split(' ')
+            #x = X[i].split(' ')
+            x = tknzr.tokenize(X[i])
             x = [k for k in x if k]
             count =0
             for j in range(len(x)): 
@@ -678,7 +686,8 @@ class Human_needs(object):
          
          for i in range(len(X)):
            for j in range(len(X[i])):
-             x = X[i][j].split(' ')
+             #x = X[i][j].split(' ')
+             x = tknzr.tokenize(X[i][j])
              x = [k for k in x if k]
              
              for k in range(len(x)): 
