@@ -54,7 +54,7 @@ Purpose: dev or train or test
 ### To extract relevant knowledge paths: 
 ~~~
 python src/graph_model/extract_path.py --graph_path --input_path --output_path --input_path
-or 
+               or 
 ./src/graph_model/run_extraction.sh
 ~~~
 #### Requirements:
