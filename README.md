@@ -24,7 +24,11 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
 
 ## Run
-
+### To construct subgraph per sentence 
+~~~
+python src/graph_model/
+~~~
+### To run the neural model: 
 ~~~
 ./src/neural_model/run_experiment.sh
 ~~~
