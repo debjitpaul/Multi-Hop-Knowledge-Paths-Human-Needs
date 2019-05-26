@@ -1,0 +1,2 @@
+2aa1aca3-9264-4e27-9ebb-fa5de8e7e84e__sent5 	 Marcus was collecting shells on the beach. He picked up a large beautiful shell. He put it in his pocket to save for later. Suddenly he felt a sharp pinch. 	 A crab was inside the shell pinching his leg. 	 Marcus 	 [0, 0, 7, 9, 0, 0, 0, 8]
+0842ca57-2075-41cf-8f3c-e85b2cf6bb94__sent1 	 No Context 	 Winston bought a brand new car today. 	 Winston 	 [9, 7, 0, 4, 0, 0, 0, 8]
