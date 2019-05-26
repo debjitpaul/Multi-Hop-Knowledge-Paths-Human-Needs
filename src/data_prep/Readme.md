@@ -2,8 +2,7 @@
 
 ## Data 
 [Modeling Naive Psychology of Characters in Simple Commonsense Stories](https://uwnlp.github.io/storycommonsense/)
-CSV file
-
+(CSV file)
 
 ## Data Distribution:
 ~~~
