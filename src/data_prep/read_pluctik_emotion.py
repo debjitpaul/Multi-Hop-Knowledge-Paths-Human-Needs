@@ -55,7 +55,6 @@ def read_file(data):
     count_distribution= [0] * len(emotion_p)
     with open(data, newline='') as csvfile:
         lines= csv.reader(csvfile)
-        
         for line in lines:
              if count_story==0:
                     count_story=count_story+1
@@ -75,15 +74,15 @@ def read_file(data):
              line[-1]=line[-1].replace('"', "")
              line[-1]=line[-1].split(",")
              if line[-3]=='yes':
-               if indicator ==False:
-                     s = line[-5]
+               if indicator==False:
+                     s = line[5]
                      c = line[2]
                      con = line[4]
                      line_num=line[1]
                      indicator=True
                if count_line==0:
                 count_line=count_line+1
-                s = line[-5]
+                s = line[5]
                 c = line[2]
                 con = line[4]
                 line_num=line[1]
@@ -104,7 +103,6 @@ def read_file(data):
                    for i in range(len(line[-1])):
                       if line[-1][i].strip().split(':')[0] in emotion_p:                            
                              pos= emotion_p.index(line[-1][i].strip().split(':')[0])
-                             
                              distribution[pos]=distribution[pos]+1
                              count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])
                   else: 
@@ -113,7 +111,6 @@ def read_file(data):
                       count=count+1
                       input_sentence.append(s)
                       input_char.append(c)
-                      
                       out.append(distribution)
                       count_out.append(count_distribution)
                       s = line[-5]
@@ -131,7 +128,7 @@ def read_file(data):
                                 distribution[pos]=distribution[pos]+1  
                                 count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])      
                else:
-                if s == line[-5]:
+                if s == line[5]:
                   if c == line[2]:
                     con = line[4]
                     line_num=line[1]
@@ -157,7 +154,7 @@ def read_file(data):
                            input_char.append(c)
                            out.append(distribution)
                            count_out.append(count_distribution)
-                           s = line[-5]
+                           s = line[5]
                            c = line[2]
                            con = line[4]
                            line_num=line[1]
@@ -172,6 +169,7 @@ def read_file(data):
                                 pos= emotion_p.index(line[-1][i].strip().split(':')[0])
                                 distribution[pos]=distribution[pos]+1 
                                 count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])
+                                
                 else:
                            
                            story_ids.append(w+'__sent'+str(line_num))
@@ -181,8 +179,9 @@ def read_file(data):
                       
                            out.append(distribution)
                            count_out.append(count_distribution)
-                           s = line[-5]
+                           s = line[5]
                            c = line[2]
+                           
                            con = line[4]
                            line_num=line[1]
                            w=line[0]
@@ -195,7 +194,8 @@ def read_file(data):
                              if line[-1][i].strip().split(':')[0] in emotion_p:                      
                                 pos= emotion_p.index(line[-1][i].strip().split(':')[0])
                                 distribution[pos]=distribution[pos]+1  
-                                count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])           
+                                count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])   
+                                     
                      
              else:
                 if indicator==True:
@@ -204,11 +204,12 @@ def read_file(data):
                     context.append(con)
                     n=1
                     input_sentence.append(s)
-                    input_char.append(line[2])
+                    input_char.append(c)
                     out.append(distribution)
+                    
                     count_out.append(count_distribution)
-                    s = line[-5]
-                    c = line[2]
+                    s = line[5]
+                    
                     con = line[4]
                     line_num=line[1]
                     w=line[0]
@@ -222,6 +223,8 @@ def read_file(data):
                                 pos= emotion_p.index(line[-1][i].strip().split(':')[0])
                                 distribution[pos]=distribution[pos]+1 
                                 count_distribution[pos]= count_distribution[pos]+int(line[-1][i].strip().split(':')[-1])
+                                
+        
         else:
         # No more lines to be read from file
             story_ids.append(w+'__sent'+str(line_num))
@@ -229,8 +232,9 @@ def read_file(data):
             n=1
             count_out.append(count_distribution)
             input_sentence.append(s)
-            input_char.append(line[2])
+            input_char.append(c)
             out.append(distribution)
+            
                                 
     count=0
     
@@ -238,7 +242,8 @@ def read_file(data):
     for i in range(len(out)):
         if sum(count_out[i])!=0:
               count=count+1
-              print(story_ids[i],'\t',context[i].replace('|',' '),'\t',input_sentence[i],'\t',input_char[i],'\t',count_out[i])
+              print(story_ids[i],'\t',context[i].replace('|',' '),'\t',input_sentence[i].replace('|',' '),'\t',input_char[i],'\t',count_out[i])
+              
     return
 
 def main():
