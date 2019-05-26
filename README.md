@@ -29,13 +29,23 @@ Please find more details in this [folder](https://github.com/debjitpaul/Multi-Ho
 
 
 ## Run
-### To construct subgraph per sentence 
+
+### Construct ConceptNet into a graph: 
+
+### To construct subgraph per sentence: 
 ~~~ 
 python src/graph_model/make_sub_graph_server.py "inputfile" "graphpath" "outputpath" "--purpose" purpose
 ~~~
+
+### To extract relevant knowledge paths: 
+
 #### Requirement: 
-Inputfile: 
-### To run the neural model: 
+Inputfile: Path to the input file as mentioned in this [sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data.txt) 
+Graphpath: Path of the conceptnet as graph. 
+Output path: Path to store the subgraph
+Purpose: dev or train or test
+
+### Finally, to run the neural model: 
 ~~~
 ./src/neural_model/run_experiment.sh
 ~~~
