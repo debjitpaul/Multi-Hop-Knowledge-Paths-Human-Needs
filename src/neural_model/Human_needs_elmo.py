@@ -47,6 +47,7 @@ class Human_needs(object):
     
         wp_vocab = wp_vocab.union(wp_vocab_knw)
         wp_vocab = wp_vocab.union(wp_vocab_context)
+        #dim_embedding = 100
         unk = numpy.random.uniform(-0.2, 0.2, dim_embedding)
         embeddings = {'UNK': unk}
         embed_file= codecs.open(embedding_path,encoding='utf-8',mode='r')
@@ -151,8 +152,8 @@ class Human_needs(object):
             reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']
             #human_needs =['physiological', 'love', 'spiritual growth', 'esteem', 'stability']
         elif self.config["human_needs"] == "reiss":
-            reiss=['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
-            #reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'contact', 'savings', 'idealism', 'rest']
+            #reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
+            reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'contact', 'savings', 'idealism', 'rest']
                 
         self.initializer = None
         if self.config["initializer"] == "normal":
@@ -189,7 +190,7 @@ class Human_needs(object):
                                  trainable=(True if self.config["train_embeddings"] == True else False))
           use_elmo = True
           if use_elmo:
-          	elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)     
+          	elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)   
           	input_tensor = elmo(inputs={"tokens": self.sentence_tokens,"sequence_len": self.sentence_lengths},signature="tokens",as_dict=True)["elmo"]
           else:
           	input_tensor = tf.nn.embedding_lookup(self.word_embeddings, self.word_ids)          
@@ -198,7 +199,7 @@ class Human_needs(object):
           self.word_representations = input_tensor
           dropout_input = self.config["dropout_input"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
           input_tensor =  tf.nn.dropout(input_tensor, dropout_input, name="dropout_word")
-          lstm_outputs = input_tensor                                    
+                
           (lstm_outputs_fw, lstm_outputs_bw), ((_, lstm_output_fw), (_, lstm_output_bw)) = tf.nn.bidirectional_dynamic_rnn(word_lstm_cell_fw, word_lstm_cell_bw, input_tensor, sequence_length=self.sentence_lengths, dtype=tf.float32, time_major=False)
           
           dropout_word_lstm = self.config["dropout_word_lstm"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
@@ -233,18 +234,14 @@ class Human_needs(object):
           
           if self.config["hidden_layer_size"] > 0:
              if self.config["sentence_composition"] == "attention":
-                #processed_tensor_context = tf.reduce_sum(lstm_outputs,1) 
+                #processed_tensor_sentence = tf.reduce_max(lstm_outputs,1) 
                 processed_tensor_sentence = tf.layers.dense(processed_tensor_1, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
              elif self.config["sentence_composition"] == "last": 
                processed_tensor_sentence = tf.layers.dense(processed_tensor, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
-          #self.token_scores = [tf.where(tf.sequence_mask(self.sentence_lengths), self.attention_weights_unnormalised, tf.zeros_like(self.attention_weights_unnormalised) - 1e6)]
-    
           
-
           
 #####################################################################  CONTEXT BI-LSTM ##################################################   
           
-         input_tensor = tf.nn.embedding_lookup(self.word_embeddings, self.word_ids_context)
          with tf.variable_scope("context"):      
           
           context_lstm_cell_fw = tf.nn.rnn_cell.LSTMCell(self.config["word_recurrent_size"], 
@@ -268,8 +265,7 @@ class Human_needs(object):
           else:
           	input_tensor = tf.nn.embedding_lookup(self.word_embeddings, self.word_ids_context)  
           dropout_input = self.config["dropout_input"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
-          input_tensor =  tf.nn.dropout(input_tensor, dropout_input, name="dropout_word")
-          lstm_outputs = input_tensor
+          input_tensor =  tf.nn.dropout(input_tensor, dropout_input, name="dropout_word")	    
           (lstm_outputs_fw, lstm_outputs_bw), ((_, lstm_output_fw), (_, lstm_output_bw)) = tf.nn.bidirectional_dynamic_rnn(context_lstm_cell_fw, context_lstm_cell_bw, input_tensor, sequence_length=self.context_lengths, dtype=tf.float32, time_major=False)
           
           dropout_word_lstm = self.config["dropout_word_lstm"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
@@ -277,7 +273,7 @@ class Human_needs(object):
           lstm_outputs_bw =  tf.nn.dropout(lstm_outputs_bw, dropout_word_lstm, noise_shape=tf.convert_to_tensor([tf.shape(self.word_ids_context)[0],1,self.config["word_recurrent_size"]], dtype=tf.int32))
           lstm_outputs = tf.concat([lstm_outputs_fw, lstm_outputs_bw], -1)
           #if self.config["hidden_layer_size"] > 0:
-          #       lstm_outputs = tf.layers.dense(lstm_outputs, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
+          #      lstm_outputs = tf.layers.dense(lstm_outputs, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
           self.lstm_outputs = lstm_outputs
 
           if self.config["sentence_composition"] == "last":
@@ -302,17 +298,14 @@ class Human_needs(object):
                 attention_weights = tf.where(tf.sequence_mask(self.context_lengths), attention_weights, tf.zeros_like(attention_weights))
                 attention_weights = attention_weights / tf.reduce_sum(attention_weights, 1, keep_dims=True)
                 processed_tensor_context = tf.reduce_sum(lstm_outputs * attention_weights[:,:,numpy.newaxis], 1)
-
           if self.config["hidden_layer_size"] > 0:
-              #processed_tensor_context = tf.reduce_sum(lstm_outputs,1)
+              #processed_tensor_context = tf.reduce_mean(lstm_outputs,1)
               processed_tensor_context = tf.layers.dense(processed_tensor_context, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
 
 
 ####################################################################### KNOWLEDGE Bi-LSTM ####################################################################################################
-         
          processed_tensor_1 = processed_tensor_sentence
          with tf.variable_scope("knowledge"):
-           processed_tensor_1 = processed_tensor_sentence
            knowledge_input_tensor = tf.nn.embedding_lookup(self.word_embeddings, self.word_ids_knowledge)
            input_vector_size = self.config["word_embedding_size"]
            
@@ -333,17 +326,11 @@ class Human_needs(object):
            knowledge_lengths = tf.reshape(self.knowledge_max_lengths, shape=[s[0]*s[1]])
            dropout_input = self.config["dropout_input"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
            knowledge_input_tensor =  tf.nn.dropout(knowledge_input_tensor, dropout_input, name="dropout_word")
-           #(lstm_outputs_fw, lstm_outputs_bw), ((_, lstm_output_fw), (_, lstm_output_bw))= tf.nn.bidirectional_dynamic_rnn(know_lstm_cell_fw, know_lstm_cell_bw, knowledge_input_tensor, sequence_length=knowledge_lengths, dtype=tf.float32, time_major=False)
-           #lstm_outputs = tf.concat([lstm_outputs_fw, lstm_outputs_bw], -1)
-          
+              
            char_lstm_outputs = tf.nn.bidirectional_dynamic_rnn(know_lstm_cell_fw, know_lstm_cell_bw, knowledge_input_tensor, sequence_length=knowledge_lengths, dtype=tf.float32, time_major=False)
            _, ((_, char_output_fw), (_, char_output_bw)) = char_lstm_outputs
            lstm_outputs = tf.concat([char_output_fw, char_output_bw], -1)
-          #tf.concat([lstm_outputs_fw, lstm_outputs_bw], -1)
-          #tf.concat([char_outputs_fw, char_outputs_bw], -1)
-                                               ####    Self-attention of knowledge    #### 
-            
-           
+          '''                        
            if self.config["sentence_composition"] == "attention":      
                 attention_evidence = tf.layers.dense(lstm_outputs, self.config["attention_evidence_size"], activation=tf.sigmoid, kernel_initializer=self.initializer)
                 attention_weights = tf.layers.dense(attention_evidence, 1, activation=None, kernel_initializer=self.initializer)
@@ -364,15 +351,13 @@ class Human_needs(object):
                 attention_weights = tf.reshape(attention_weights, shape=[tf.shape(attention_weights)[0]*tf.shape(attention_weights)[1],tf.shape(attention_weights)[2]])
                 lstm_outputs = tf.reduce_sum(lstm_outputs * attention_weights[:,:,numpy.newaxis], 1)
           
-           
+           '''
            lstm_outputs = tf.reshape(lstm_outputs, shape=[s[0], s[1], 2*self.config["word_embedding_size"]])
            dropout_word_lstm = self.config["dropout_word_lstm"] * tf.cast(self.is_training, tf.float32) + (1.0 - tf.cast(self.is_training, tf.float32))
-           lstm_outputs = tf.nn.dropout(lstm_outputs,dropout_word_lstm)
+           lstm_outputs = tf.nn.dropout(lstm_outputs, dropout_word_lstm)
            if self.config["whidden_layer_size"] > 0:
               lstm_outputs = tf.layers.dense(lstm_outputs, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
-          
            knowledge_output_vector_size = 2 * self.config["word_embedding_size"] 
-           lstm_outputs = tf.nn.dropout(lstm_outputs, dropout_word_lstm)
            self.lstm_outputs = lstm_outputs         
            t_lstm_outputs = tf.transpose(lstm_outputs, [0, 2, 1])
            if self.config["sentence_composition"] == "attention":
@@ -382,37 +367,49 @@ class Human_needs(object):
                 if self.config["attention_activation"] == "sharp":
                     attention_weights = tf.exp(attention_weights)
                 elif self.config["attention_activation"] == "soft":
-                    attention_weights = tf.sigmoid(attention_weights)
+                    attention_weights = tf.nn.softmax(attention_weights)
+                    #pass
                 elif self.config["attention_activation"] == "linear":
                     pass
                 else:
                     raise ValueError("Unknown activation for attention: " + str(self.config["attention_activation"]))
 
                 self.attention_weights_unnormalised = attention_weights 
-                attention_weights = tf.transpose(attention_weights, [0, 2, 1])# batch, 1,number of Knowledge
+                #attention_weights = tf.transpose(attention_weights, [0, 2, 1])# batch, 1,number of Knowledge
                 self.attention_weights = attention_weights 
+                #attention_weights = tf.squeeze(attention_weights)
+                #attention_weights = tf.exp(attention_weights)
+                sum_attention_weights = attention_weights
+                #sum_attention_weights = tf.squeeze(attention_weights)
+                #attention_weights = tf.reshape(attention_weights, [s[0],s[1],s[2]])
+                #attention_weights = tf.where(tf.sequence_mask(self.knowledge_max_lengths), attention_weights, tf.zeros_like(attention_weights))
+                #attention_weights = attention_weights / tf.reduce_sum(sum_attention_weights,-1, keep_dims=True)
+                #attention_weights = tf.reshape(attention_weights, [s[0],s[1]*s[2]])
+                #attention_weights = tf.expand_dims(attention_weights, -1)
+                self.attention_weights = tf.squeeze(attention_weights)
+
                 #attention_weights = tf.squeeze(attention_weights)
                 
                 #weights_path = tf.expand_dims(self.weights_path, -1)
                 #weights_path = tf.transpose(weights_path, [0,2,1])
                 #attention_weights = tf.matmul(weights_path,attention_weights)
-                #attention_weights = tf.transpose(attention_weights, [0, 2, 1])
+                attention_weights = tf.transpose(attention_weights, [0, 2, 1])
                 #attention_weights = tf.expand_dims(attention_weights, -1)
                 
-                processed_tensor_knowledge = tf.reduce_max(attention_weights * lstm_outputs, axis=1)  # bs, d
+                processed_tensor_knowledge = tf.reduce_sum(lstm_outputs * attention_weights, axis=1)  # bs, d
                 processed_tensor_knowledge = tf.layers.dense(processed_tensor_knowledge, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer) 
-                processed_tensor_knowledge_att = tf.expand_dims(processed_tensor_knowledge, -1) #batch, Dim, 1
+                #processed_tensor_knowledge_att = tf.expand_dims(processed_tensor_knowledge, -1) #batch, Dim, 1
                 #processed_tensor_knowledge_att = tf.transpose(processed_tensor_knowledge_att, [0,2,1]) #batch,1,Dim
                             ### attention over attention for the sentence
-                attention_weights = tf.matmul(processed_tensor_knowledge_att, processed_tensor_1)
-                attention_weights = tf.nn.softmax(attention_weights)
-                attention_weights = tf.transpose(attention_weights, [0, 2, 1])
-                processed_tensor_knowledge_sentence = tf.reduce_max(attention_weights * tf.transpose(processed_tensor_1,[0,2,1]), axis=1)
+                #attention_weights = tf.matmul(processed_tensor_knowledge_att, processed_tensor_1)
+                #attention_weights = tf.nn.softmax(attention_weights)
+                #attention_weights = tf.transpose(attention_weights, [0, 2, 1])
+                #processed_tensor_knowledge_sentence = tf.reduce_sum(attention_weights * tf.transpose(processed_tensor_1,[0,2,1]), axis=1)
                 
-           if self.config["hidden_layer_size"] > 0:
+           #if self.config["hidden_layer_size"] > 0:
                 #processed_tensor_knowledge = tf.layers.dense(processed_tensor_knowledge, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer) 
-                processed_tensor_knowledge_sentence = tf.layers.dense(processed_tensor_knowledge_sentence, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)        
-                              
+                #processed_tensor_knowledge_sentence = tf.layers.dense(processed_tensor_knowledge_sentence, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)        
+                                
           
           
 #####################################################################################################################################################
@@ -421,13 +418,19 @@ class Human_needs(object):
 
           
          if self.config["sentence_composition"] == "attention":
-               
-              dense_input = tf.concat([processed_tensor_sentence, processed_tensor_context],1)
+              dense_input_sen_con = tf.concat([processed_tensor_sentence, processed_tensor_context],1)
+              
+              dense_input_sen_con = tf.layers.dense(dense_input_sen_con, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)      
+              dense_input = tf.concat([processed_tensor_sentence, processed_tensor_knowledge],1) #,processed_tensor_knowledge,,processed_tensor_context
               dense_input = tf.layers.dense(dense_input, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer) 
+              
+              
+              final_score = (dense_input * processed_tensor_sentence) + (dense_input * processed_tensor_knowledge)
+              final_score = dense_input_sen_con
               softmax_w = tf.get_variable('softmax_w', shape=[100, len(reiss)],initializer=tf.zeros_initializer, dtype=tf.float32)    
               
          elif self.config["sentence_composition"] == "last":   
-              dense_input = tf.concat([processed_tensor_sentence,processed_tensor_context],2) #,processed_tensor_knowledge,processed_tensor_sentence,,
+              dense_input = tf.concat([processed_tensor_sentence, processed_tensor_context],2) #,processed_tensor_knowledge,processed_tensor_sentence,,
               dense_input = tf.reshape(dense_input,[self.batch_size, self.max_lengths[0] * dense_input.get_shape()[2]])#self.max_lengths[0] * dense_input.get_shape()[2]])
               #dense_input = tf.concat([dense_input, processed_tensor_knowledge],1)
               softmax_w = tf.get_variable('softmax_w',shape = [56*200,len(reiss)], initializer=tf.zeros_initializer, dtype=tf.float32)
@@ -438,7 +441,7 @@ class Human_needs(object):
           #if self.config["hidden_layer_size"] > 0:
           #    dense_input = tf.layers.dense(dense_input, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer)
           
-         self.sentence_scores = tf.matmul(dense_input, softmax_w) + softmax_b
+         self.sentence_scores = tf.matmul(final_score, softmax_w) + softmax_b
           
           
           
@@ -446,18 +449,16 @@ class Human_needs(object):
 ###############################################################CALCULATE SCORE################################################################
 #####################################################################################################################################################  
 
-         #if self.config["human_needs"] == "reiss":
-         #    w = [3.929112469627414, 4.352634266669815, 4.105348968927056, 4.009469417408209, 4.436903109491611, 3.4714643441750805, 4.533726764493145, 3.665643259544512, 5.264175448882736, 6.026320782448594, 3.7522367243231805, 3.8019798963053515, 7.896001211803761, 8.024995943144209, 3.3076036095385644, 3.81662584588786, 8.618279130276653, 6.7344516295276895]
          if self.config["human_needs"] == "maslow":
-              w = [3.3580651133263086, 2.4043071629811266, 2.948496008202039, 2.609976477765905, 2.3545068920496965]
-         else:     
-              w = [3.929112469627414, 4.352634266669815, 4.105348968927056, 4.009469417408209, 4.436903109491611, 3.4714643441750805, 4.533726764493145, 3.665643259544512, 5.264175448882736, 6.026320782448594, 3.7522367243231805, 3.8019798963053515, 7.896001211803761, 8.024995943144209, 15.275082043791086, 3.3076036095385644, 3.81662584588786, 8.618279130276653, 6.7344516295276895]
+                          
+                    w = [3.3580651133263086, 2.4043071629811266, 2.948496008202039, 2.609976477765905, 2.3545068920496965]
+         else:
+                    #with belonging: 
+                    w = [3.929112469627414, 4.352634266669815, 4.105348968927056, 4.009469417408209, 4.436903109491611, 3.4714643441750805, 4.533726764493145, 3.665643259544512, 5.264175448882736, 6.026320782448594, 3.7522367243231805, 3.8019798963053515, 7.896001211803761, 8.024995943144209, 15.275082043791086, 3.3076036095385644, 3.81662584588786, 8.618279130276653, 6.7344516295276895]
+                    #without belonging class: 
+                    #w = [3.929112469627414, 4.352634266669815, 4.105348968927056, 4.009469417408209, 4.436903109491611, 3.4714643441750805, 4.533726764493145, 3.665643259544512, 5.264175448882736, 6.026320782448594, 3.7522367243231805, 3.8019798963053515, 7.896001211803761, 8.024995943144209, 3.3076036095385644, 3.81662584588786, 8.618279130276653, 6.7344516295276895]
                        
-         
          w = tf.convert_to_tensor(w, dtype=tf.float32)
-          #lossy =  w*self.sentence_labels * tf.log(tf.sigmoid(self.sentence_scores)) + (1-w) *(1-self.sentence_labels) * tf.log(1-tf.sigmoid(self.sentence_scores))
-          #lossy = tf.nn.sigmoid_cross_entropy_with_logits(labels=self.sentence_labels,logits=self.sentence_scores)
-         #lossy = tf.nn.sigmoid_cross_entropy_with_logits(labels=self.sentence_labels, logits=self.sentence_scores)
          lossy = tf.nn.weighted_cross_entropy_with_logits(targets=self.sentence_labels,logits=self.sentence_scores, pos_weight=w)
           
          self.loss = tf.reduce_sum(lossy)
@@ -554,6 +555,7 @@ class Human_needs(object):
                   max_length_know = max(knowledge_lengths[i])
             max_length_context = max(context_lengths)
             
+            #print(max_length_know,max_length_context,max_length_sent)
             max_length = 56
             sentence_lengths=[]
             context_lengths=[]
@@ -577,7 +579,8 @@ class Human_needs(object):
             context_pad = self._make_padding(word_ids_context, max_length_context)
             input_dictionary = {self.word_ids: sentences_pad, self.batch_size: len(sentences), self.max_lengths: max_lengths, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes, self.sentence_tokens: sentence_tokens, self.knowledge_tokens:knowledge_tokens, self.context_tokens:context_tokens, self.word_ids_knowledge: knowledge_pad, self.knowledge_max_lengths: knowledge_max_lengths, self.knowledge_lengths: knowledge_lengths, self.word_ids_context:  context_pad, self.context_lengths: context_lengths, self.learningrate: learningrate, self.is_training: is_training}#self.word_ids_knowledge: word_ids_knowledge,self.knowledge_lengths: knowledge_lengths,
                         
-            
+            #input_dictionary = {self.word_ids: sentences_pad, self.batch_size: len(sentences), self.max_lengths: max_lengths,self.weights_path:weight_per, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes, self.sentence_tokens:sentence_tokens, ,self.word_ids_context:context_pad, self.context_tokens:context_tokens, self.context_lengths: context_lengths, self.learningrate: learningrate, self.is_training: is_training}
+            #self.word_ids_knowledge: knowledge_pad, self.knowledge_max_lengths: knowledge_max_lengths, self.knowledge_tokens:knowledge_tokens, self.knowledge_lengths: knowledge_lengths,
             
         elif self.config["sentence_composition"] == "attention":
             input_dictionary = {self.word_ids: word_ids, self.batch_size: len(sentences), self.max_lengths: max_lengths, self.weights_path:weight_per, self.sentence_lengths: sentence_lengths, self.sentence_labels: sentence_classes,  self.word_ids_knowledge: word_ids_knowledge, self.knowledge_lengths: knowledge_lengths, self.knowledge_tokens:knowledge_tokens, self.word_ids_context: word_ids_context, self.context_lengths: context_lengths, self.context_tokens:context_tokens ,self.learningrate: learningrate, self.is_training: is_training}
@@ -605,9 +608,9 @@ class Human_needs(object):
         if self.config["human_needs"] == "maslow":
             reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']
         elif self.config["human_needs"] == "reiss":
-            reiss=['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'contact', 'savings', 'idealism', 'rest']
-            reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
-                        
+            #reiss=['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'belonging', 'contact', 'savings', 'idealism', 'rest']
+            reiss = ['status', 'approval', 'tranquility', 'competition', 'health', 'family', 'romance', 'food', 'indep', 'power', 'order', 'curiosity', 'serenity', 'honor', 'contact', 'savings', 'idealism', 'rest']
+                
         sentence_lengths=[]
         max_length_count=[]
         sentence_list=[]
@@ -783,3 +786,4 @@ class Human_needs(object):
                 assert(variable.shape == dump["params"][variable.name].shape), "Variable shape not as expected: " + str(variable.name) + " " + str(variable.shape) + " " + str(dump["params"][variable.name].shape)
                 value = numpy.asarray(dump["params"][variable.name])
                 self.session.run(variable.assign(value))
+
