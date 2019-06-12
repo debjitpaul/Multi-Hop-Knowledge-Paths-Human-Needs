@@ -76,11 +76,16 @@ Purpose: dev or train or test
 If you make use of the contents of this repository, please cite [the following paper](https://arxiv.org/abs/1904.00676):
 
 ```
-@inproceedings{paulfrank:rankinghumanneeds,
-  title={Ranking and Selecting Multi-Hop Knowledge Paths to Better Predict Human Needs},
-  author={Paul, Debjit and Frank, Anette},
-  booktitle={Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)},
-  year={2019},
-  address={Minneapolis, USA},
-  note={to appear}
+@inproceedings{paul-frank-2019-ranking,
+    title = "Ranking and Selecting Multi-Hop Knowledge Paths to Better Predict Human Needs",
+    author = "Paul, Debjit  and
+      Frank, Anette",
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/N19-1368",
+    pages = "3671--3681",
+    abstract = "To make machines better understand sentiments, research needs to move from polarity identification to understanding the reasons that underlie the expression of sentiment. Categorizing the goals or needs of humans is one way to explain the expression of sentiment in text. Humans are good at understanding situations described in natural language and can easily connect them to the character{'}s psychological needs using commonsense knowledge. We present a novel method to extract, rank, filter and select multi-hop relation paths from a commonsense knowledge resource to interpret the expression of sentiment in terms of their underlying human needs. We efficiently integrate the acquired knowledge paths in a neural model that interfaces context representations with knowledge using a gated attention mechanism. We assess the model{'}s performance on a recently published dataset for categorizing human needs. Selectively integrating knowledge paths boosts performance and establishes a new state-of-the-art. Our model offers interpretability through the learned attention map over commonsense knowledge paths. Human evaluation highlights the relevance of the encoded knowledge.",
 }
