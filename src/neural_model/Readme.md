@@ -36,5 +36,12 @@ story+sentence_id \t context \t sentence \t char \t emotion distribution
 story+sentence_id \t context \t sentence \t char \t human need distribution 
 ~~~~
 
+## Where can we find the sample?
+
+~~~~
+/src/data_prep
+~~~~
+
+
 
 
