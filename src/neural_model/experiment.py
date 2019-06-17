@@ -50,6 +50,8 @@ def read_input_files(file_path, max_sentence_length=-1):
         
     elif config["human_needs"] == "maslow":
        reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']  
+    
+    ##top_19_human_need_path.txt --> human_need_paths extracted using graph model (Sample path: /src/data_prep/sample_human_need_paths.txt)
     with codecs.open("./top_19_human_need_path.txt", encoding='utf-8',mode='r') as k:
         for l in k:
             story_id_know.append(l.split('\t')[0].strip(' '))
@@ -62,8 +64,6 @@ def read_input_files(file_path, max_sentence_length=-1):
             facts = facts.split(",")
             
             for i in range(len(facts)):
-                if 'belonging' not in facts[i]:
-                    if len(facts[i])<=13:
                        lst2.append(facts[i].replace("_", " ").strip('\n'))  
                 
             w=[0]*len(facts)         
