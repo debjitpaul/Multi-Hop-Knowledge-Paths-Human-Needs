@@ -65,6 +65,12 @@ Output path: Path to store knowledge paths per context_sentence_ids.
 Purpose: dev or train or test
 ~~~~
 
+### Data Format and Requirements:
+~~~
+Please find the data format in data_prep
+~~~
+
+
 ### Finally, to run the neural model: 
 ~~~
 ./src/neural_model/run_experiment.sh
