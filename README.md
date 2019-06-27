@@ -79,7 +79,7 @@ Please find the data format in data_prep
 
 ## Reference
 
-If you make use of the contents of this repository, please cite [the following paper](https://arxiv.org/abs/1904.00676):
+If you make use of the contents of this repository, please cite [the following paper](https://www.aclweb.org/anthology/N19-1368):
 
 ```
 @inproceedings{paul-frank-2019-ranking,
