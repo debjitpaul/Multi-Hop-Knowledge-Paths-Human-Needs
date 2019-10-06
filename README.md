@@ -37,7 +37,7 @@ Please find more details in this [folder](https://github.com/debjitpaul/Multi-Ho
 ### Construct ConceptNet into a graph: 
 ~~~
 python src/graph_model/conceptnet2graph.py path_to_ConceptNet_csv_file
-path_to_ConceptNet_csv_file(https://github.com/commonsense/conceptnet5/wiki/Downloads)
+[path_to_ConceptNet_csv_file](https://github.com/commonsense/conceptnet5/wiki/Downloads)
 ~~~
 
 ### To construct subgraph per sentence: 
