@@ -31,20 +31,21 @@ ConceptNet 5.6.0
 
 Please find more details in this [folder](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep)
 
-
 ## Run
 ### Steps: 
 ### Download the csv file from [ConceptNet webpage](http://conceptnet.io/)
 File Link: [path_to_ConceptNet_csv_file](https://github.com/commonsense/conceptnet5/wiki/Downloads)
 ### Construct ConceptNet into a graph: 
 ~~~
-python src/graph_model/conceptnet2graph.py path_to_ConceptNet_csv_file
+python src/graph_model/conceptnet2graph.py path_to_ConceptNet_csv_file 
 ~~~
+In this step we make the conceptnet.csv into a graph representation as conceptnet . 
 
 ### To construct subgraph per sentence: 
 ~~~ 
 python src/graph_model/make_sub_graph_server.py "inputfile" "graphpath" "outputpath" "--purpose" purpose
 ~~~
+Here, the graphpath is the above constructed graph which is 'concept_graph_full'
 #### Requirements: 
 [Input Sample](https://github.com/debjitpaul/Multi-Hop-Knowledge-Paths-Human-Needs/tree/master/src/data_prep/sample_data_reiss_concepts.txt) 
 ~~~
@@ -53,6 +54,7 @@ Graphpath: Path of the conceptnet as graph.
 Output path: Path to store the subgraph
 Purpose: dev or train or test
 ~~~
+Please note: You need to extract the concepts for each sentence using n-gram matching.  
 ### To extract relevant knowledge paths: 
 ~~~
 python src/graph_model/extract_path.py --graph_path --input_path --output_path --input_path
