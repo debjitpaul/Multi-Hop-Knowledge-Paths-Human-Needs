@@ -6,7 +6,7 @@ This directory contains the following parts of the 'Ranking and Selecting Multi-
 - python3+
 - nltk
 - igraph
-- Tensorflow 
+- Tensorflow 1.12.0
 - Tensorflow-hub
 ~~~~
 
