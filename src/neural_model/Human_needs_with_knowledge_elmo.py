@@ -431,7 +431,7 @@ class Human_needs(object):
               
               
               final_score = (dense_input * processed_tensor_sentence) + (dense_input * processed_tensor_knowledge)
-              final_score = dense_input_sen_con
+              #final_score = dense_input_sen_con
               softmax_w = tf.get_variable('softmax_w', shape=[100, len(reiss)],initializer=tf.zeros_initializer, dtype=tf.float32)    
               
          elif self.config["sentence_composition"] == "last":   
