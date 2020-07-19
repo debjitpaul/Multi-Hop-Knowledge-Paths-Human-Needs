@@ -385,18 +385,10 @@ class Human_needs(object):
                 #attention_weights = tf.squeeze(attention_weights)
                 #attention_weights = tf.exp(attention_weights)
                 sum_attention_weights = attention_weights
-                #sum_attention_weights = tf.squeeze(attention_weights)
-                #attention_weights = tf.reshape(attention_weights, [s[0],s[1],s[2]])
-                #attention_weights = tf.where(tf.sequence_mask(self.knowledge_max_lengths), attention_weights, tf.zeros_like(attention_weights))
-                #attention_weights = attention_weights / tf.reduce_sum(sum_attention_weights,-1, keep_dims=True)
-                #attention_weights = tf.reshape(attention_weights, [s[0],s[1]*s[2]])
-                #attention_weights = tf.expand_dims(attention_weights, -1)
+                
                 self.attention_weights = tf.squeeze(attention_weights)
 
-                #attention_weights = tf.squeeze(attention_weights)
                 
-                #weights_path = tf.expand_dims(self.weights_path, -1)
-                #weights_path = tf.transpose(weights_path, [0,2,1])
                 #attention_weights = tf.matmul(weights_path,attention_weights)
                 attention_weights = tf.transpose(attention_weights, [0, 2, 1])
                 #attention_weights = tf.expand_dims(attention_weights, -1)
@@ -430,7 +422,7 @@ class Human_needs(object):
               dense_input = tf.layers.dense(dense_input, self.config["hidden_layer_size"], activation=tf.nn.relu, kernel_initializer=self.initializer) 
               
               
-              final_score = (dense_input * processed_tensor_sentence) + (dense_input * processed_tensor_knowledge)
+              final_score = (dense_input * dense_input_sen_con) + (dense_input * processed_tensor_knowledge)
               #final_score = dense_input_sen_con
               softmax_w = tf.get_variable('softmax_w', shape=[100, len(reiss)],initializer=tf.zeros_initializer, dtype=tf.float32)    
               
