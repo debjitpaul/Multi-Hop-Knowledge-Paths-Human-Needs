@@ -52,7 +52,7 @@ def read_input_files(file_path, max_sentence_length=-1):
        reiss=['physiological', 'love', 'spiritual growth', 'esteem', 'stability']  
     
     ##top_19_human_need_path.txt --> human_need_paths extracted using graph model (Sample path: /src/data_prep/sample_human_need_paths.txt)
-    with codecs.open("./top_19_human_need_path.txt", encoding='utf-8',mode='r') as k:
+    with codecs.open("knowledge_path.txt", encoding='utf-8',mode='r') as k: ##change the name to the one you have.
         for l in k:
             story_id_know.append(l.split('\t')[0].strip(' '))
             facts = l.split('\t')[-1]
@@ -74,6 +74,7 @@ def read_input_files(file_path, max_sentence_length=-1):
             
             
     with codecs.open(file_path,encoding="utf-8",mode="r") as f: 
+        ## story_id + "\t" + context + "\t"+ sent + "\t" + char + "\t" + label --> [1,0,0,0,0,0,0,1,0]
         for line in f:
             story_id = line.split('\t')[0]
             
